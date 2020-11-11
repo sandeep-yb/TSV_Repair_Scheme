@@ -52,8 +52,15 @@ int main() {
             }
         }    
         cout<<endl;
-        cout<<"Enter length constraint"<<endl;
-        cin>>length_constraint;
+        cout<<"Enter length constraints array \n Enter 0 if a signal has no length constraint"<<endl;
+        vector<int> length_constraints(N, 0);
+        for(int i=0;i<rows;i++) {
+            for(int j=0;j<cols;j++) {
+                int x; cin>>x;
+
+                length_constraints[get_index(i,j,rows,cols)] = x;
+            }
+        }  
         cout<<endl;
     
     
@@ -153,7 +160,8 @@ int main() {
             cur_repair_path.push_back(cur);
         }
         reverse(cur_repair_path.begin(), cur_repair_path.end());
-        if(cur_repair_path.size() > length_constraint + 1) {
+        int tsv = cur_repair_path[0];
+        if(length_constraints[tsv] != 0 && cur_repair_path.size() > length_constraint + 1) {
             cout<<"The given TSV Grid is not repairable under given length constraint \n Try increasing the length constraint\n"<<endl;
             return 0;
         }
