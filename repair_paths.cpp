@@ -52,16 +52,7 @@ int main() {
             }
         }    
         cout<<endl;
-        cout<<"Enter length constraints array \n Enter 0 if a signal has no length constraint"<<endl;
-        vector<int> length_constraints(N, 0);
-        for(int i=0;i<rows;i++) {
-            for(int j=0;j<cols;j++) {
-                int x; cin>>x;
-
-                length_constraints[get_index(i,j,rows,cols)] = x;
-            }
-        }  
-        cout<<endl;
+        
     
     
     for(int i=0;i<rows;i++) {
@@ -79,6 +70,15 @@ int main() {
             }
         }
     }    
+    cout<<"Enter length constraints for all the signals corresponding to "<<faulty_tsvs.size()<<" faulty TSVs in row major order \n"<<endl;
+        vector<int> length_constraints(N);
+        for(int i=0;i<faulty_tsvs.size();i++) {
+                int x; cin>>x;
+
+                length_constraints[faulty_tsvs[i]] = x;
+            
+        }  
+        cout<<endl;
 
     for(int i=0;i<N;i++) {
         for(int j=0;j<N;j++) {
@@ -161,8 +161,8 @@ int main() {
         }
         reverse(cur_repair_path.begin(), cur_repair_path.end());
         int tsv = cur_repair_path[0];
-        if(length_constraints[tsv] != 0 && cur_repair_path.size() > length_constraint + 1) {
-            cout<<"The given TSV Grid is not repairable under given length constraint \n Try increasing the length constraint\n"<<endl;
+        if(cur_repair_path.size() > length_constraint + 1) {
+            cout<<"The given TSV Grid is not repairable \n "<<endl;
             return 0;
         }
         repair_paths.push_back(cur_repair_path);
@@ -170,7 +170,7 @@ int main() {
 
     int no_of_faulty_tsvs = faulty_tsvs.size();
     if(total_no_of_paths == no_of_faulty_tsvs) {
-        cout<<"The given TSV Grid is repairable under given length constraint"<<endl<<endl;
+        cout<<"The given TSV Grid is repairable"<<endl<<endl;
         cout<<"Repair paths are"<<endl<<endl;
         for(auto repair_path : repair_paths) {
             for(int i=0;i<repair_path.size();i++)  {
@@ -181,6 +181,6 @@ int main() {
         }
     }
     else {
-         cout<<"The given TSV Grid is not repairable under given length constraint \n Try increasing the number of correct TSVs \n OR \n  decreasing the number of faulty TSVs\n"<<endl;;
+         cout<<"The given TSV Grid is not repairable \n "<<endl;;
     }
 }
